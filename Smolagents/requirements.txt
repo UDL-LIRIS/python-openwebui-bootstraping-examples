@@ -1,0 +1,4 @@
+smolagents
+smolagents[litellm]
+duckduckgo-search
+markdownify
