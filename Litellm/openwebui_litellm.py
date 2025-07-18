@@ -1,4 +1,5 @@
 import os
+import sys
 
 ########## Configuring the context and defining the model
 OPENWEBUI_SERVER_URL = "https://some-server.organisation.org/"  # TO BE EDITED
@@ -12,7 +13,7 @@ try:
 except KeyError:
     print("API_KEY environment variable was not set.")
     print("Exiting.")
-    os.exit(1)
+    sys.exit(1)
 
 ### Using the model through the Litellm package
 if __name__ == "__main__":

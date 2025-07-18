@@ -1,4 +1,15 @@
-# Running smolagents on top of Open WebUI
+# Running smolagents on top of Open WebUI<!-- omit from toc -->
+
+## Table of contents<!-- omit from toc -->
+
+- [Introduction](#introduction)
+- [Setup your python virtual environment](#setup-your-python-virtual-environment)
+- [Parametrize your Open WebUI platform access](#parametrize-your-open-webui-platform-access)
+- [Running things](#running-things)
+- [Troubleshooting](#troubleshooting)
+- [Peculiarities/specificities of `smolagents`](#peculiaritiesspecificities-of-smolagents)
+
+## Introduction
 
 The [`smolagents.py`](./smolagents.py) python example illustrates how to use an LLM server by an Open WebUI server with the [smolagents](https://github.com/huggingface/smolagents) library.
 
@@ -6,24 +17,20 @@ The [`smolagents.py`](./smolagents.py) python example illustrates how to use an 
 
 ```bash
 cd `git rev-parse --show-toplevel`/Smolagents     # The directory of this file
-python3.10 -m venv venv                           # Due to smolagents
+python3.10 -m venv venv                           # Version due to smolagents
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Parametrize your Open WebUI platform access
 
-CUSTOMIZE" section. it the OPENWEBUI_SERVER_URL, API_KEY
-Retrieve you api your API key from Settings ---> Account tab of the Open WebUI  interface. Then define an `API_KEY` environment variable with the retrieved value (recommended in order to avoid writing down, and possibly diffusing, the key) with
+[Retrieve you api key](../Readme.md#configure-the-api_key) and define API_KEY environment variable with e.g.
 
 ```bash
 export API_KEY=<your-api-key>
 ```
 
-Edit the `smolagents.py` code and customize it to define the following variables
-
-- `OPENWEBUI_SERVER_URL` to the be URL of the Open WebUI server you wish to use
-- `API_KEY` only if you didn't already defined it as environment variable  
+Edit the [`smolagents.py`](./smolagents.py) code and configure the `OPENWEBUI_SERVER_URL` to point to the Open WebUI server you wish to use.
 
 ## Running things
 
@@ -42,3 +49,7 @@ When troubleshooting the execution of `smolagents.py`, you might it find useful 
 import litellm
 litellm._turn_on_debug()
 ```
+
+## Peculiarities/specificities of `smolagents`
+
+Because `smolagents` uses `litellm` as underlying library (refer to [`smolagents.LiteLLMModel`](https://github.com/huggingface/smolagents/blob/main/src/smolagents/models.py#L1074)), `smolagents` "inherits" from [`litellm` peculiarities](../Litellm/Readme.md#peculiaritiesspecificities-of-litellm).
