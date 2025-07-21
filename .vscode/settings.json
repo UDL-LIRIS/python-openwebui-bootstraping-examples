@@ -10,6 +10,7 @@
         "litellm",
         "misconfiguring",
         "ollama",
+        "openai",
         "openwebui",
         "OPENWEBUI",
         "parado",
@@ -20,6 +21,7 @@
         "smolagents",
         "spanish",
         "tiempo",
+        "toplevel",
         "venv"
     ]
 }

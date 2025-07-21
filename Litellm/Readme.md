@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## Parametrize your Open WebUI platform access
 
-[Retrieve you api key](../Readme.md#configure-the-api_key) and define API_KEY environment variable with e.g.
+[Retrieve you api key](../Readme.md#define-the-api_key) and define API_KEY environment variable with e.g.
 
 ```bash
 export API_KEY=<your-api-key>

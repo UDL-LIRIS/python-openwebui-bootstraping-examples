@@ -17,14 +17,14 @@ The [`smolagents.py`](./smolagents.py) python example illustrates how to use an 
 
 ```bash
 cd `git rev-parse --show-toplevel`/Smolagents     # The directory of this file
-python3.10 -m venv venv                           # Version due to smolagents
+python3.10 -m venv venv                           # Watch out: version constraint due to smolagents
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Parametrize your Open WebUI platform access
 
-[Retrieve you api key](../Readme.md#configure-the-api_key) and define API_KEY environment variable with e.g.
+[Retrieve you api key](../Readme.md#define-the-api_key) and define API_KEY environment variable with e.g.
 
 ```bash
 export API_KEY=<your-api-key>

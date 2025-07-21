@@ -1,10 +1,9 @@
-# A tiny AI example
+# A tiny AI agents example
 # - using the smolagents library
 # - running on top of an Open WebUI server
 
 import os
 import sys
-from smolagents import CodeAgent, LiteLLMModel, DuckDuckGoSearchTool
 
 ########## Configuring the context and defining the model
 OPENWEBUI_SERVER_URL = "https://some-server.organisation.org/"  # TO BE EDITED
@@ -22,7 +21,8 @@ except KeyError:
 
 ### Using the model through the smolagents package
 if __name__ == "__main__":
-
+    from smolagents import CodeAgent, LiteLLMModel, DuckDuckGoSearchTool
+    
     # The following code is the one of the original smolagents' example, refer to
     # https://github.com/huggingface/smolagents/blob/main/examples/multi_llm_agent.py
     model = LiteLLMModel(
