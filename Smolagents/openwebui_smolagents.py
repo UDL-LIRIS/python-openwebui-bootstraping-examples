@@ -7,7 +7,7 @@ import sys
 from smolagents import CodeAgent, LiteLLMModel, DuckDuckGoSearchTool
 
 ########## Configuring the context and defining the model
-OPENWEBUI_SERVER_URL = "https://ollama-ui.pagoda.liris.cnrs.fr/"  # TO BE EDITED
+OPENWEBUI_SERVER_URL = "https://some-server.organisation.org/"  # TO BE EDITED
 
 ### The following variables should work by default
 MODEL_ID = "featherless_ai/qwen2.5-coder:32b-instruct-fp16"

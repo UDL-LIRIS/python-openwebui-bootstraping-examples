@@ -11,6 +11,7 @@
   - [Define the API endpoint through `OPENWEBUI_API_ENDPOINT`](#define-the-api-endpoint-through-openwebui_api_endpoint)
 - [Troubleshooting out of error messages](#troubleshooting-out-of-error-messages)
   - [405: Method Not Allowed](#405-method-not-allowed)
+  - [Ollama\_chat Exception "Not authenticated"](#ollama_chat-exception-not-authenticated)
 - [Running the examples](#running-the-examples)
 
 ## Introduction
@@ -21,7 +22,7 @@ Assume you have the following context:
 - you are a Python developer,
 - the application your are working on leads/encourages you to use
   - a single LLM type (or a limited subset of LLMs)
-  - a given python package/library e.g. [`litellm`](https://docs.litellm.ai/), [`smolagent`](https://github.com/huggingface/smolagents)...
+  - a given python package/library e.g. [`litellm`](https://docs.litellm.ai/), [`smolagents`](https://github.com/huggingface/smolagents)...
 
 In such a context you will have to align each of the above ressources in order to get things working.
 
@@ -31,7 +32,7 @@ The **purpose of this documentation/repository is to provide some hints/methodol
 
 The information that you need to provide/configure boils down to four parameters (python variables)
 
-- `OPENWEBUI_SERVER_URL` that is the URL through which the Open Webui server can be reached e.g. `https://some-server.organisation.org/`
+- `OPENWEBUI_SERVER_URL` that is the URL through which the [Open WebUI](https://github.com/open-webui/open-webui) server can be reached e.g. `https://some-server.organisation.org/`
 - `OPENWEBUI_API_ENDPOINT` to be chose among [available Open WebUI endpoints](https://docs.openwebui.com/getting-started/api-endpoints/) e.g. `ollama/v1`
 - `MODEL_ID` that designates the LLM or model e.g. `llama3:70b` or `qwen2.5-coder:32b-instruct` you need to use
 - `API_KEY` that holds your credentials for using the designated Open WebUI server
@@ -66,7 +67,7 @@ for which you should get some response in the `html` format.
 
 For example when working with the [litellm](./Litellm/) package, and when misconfiguring `OPENWEBUI_SERVER_URL` you will get a message of the form
 
-```bash 
+```bash
 litellm.exceptions.InternalServerError: [...] Exception - Connection error
 ```
 
@@ -109,7 +110,7 @@ Then, select a model name among the list of available models, and configure the 
 export MODEL_ID=llama3:70b
 ```
 
-Asserting that the model is functional requires a proper `OPENWEBUI_API_ENDPOINT` definition. But if at some point you get an error message of the form `{"detail":"Model 'llamaa3:70' was not found"}`, you should tune the `MODEL_ID` variable.
+Asserting that the model is functional requires a proper `OPENWEBUI_API_ENDPOINT` definition. But if at some point you get an error message of the form `{"detail":"Model 'llamaaa3:70' was not found"}`, (model was misspelled with a trailing triple `aaa`) you should tune the `MODEL_ID` variable. <!-- cspell:ignore llamaaa -->
 
 Note that for some python libraries like LiteL FIXME
 
@@ -124,25 +125,36 @@ export OPENWEBUI_API_ENDPOINT=ollama/api/generate
 curl -X 'POST' $OPENWEBUI_SERVER_URL'/'$OPENWEBUI_API_ENDPOINT -H 'Authorization: BEARER '$API_KEY -H 'Content-Type: application/json'  -d '{ "model": "'$MODEL_ID'", "prompt": "How are you today?"}'
 ```
 
-
-FIXME FIXME
-If you get  an error code of 405 generally means that the route is not implemented
-  It seems that the litellm.completion() methods postpones the given model
-   the "chat/completions" route complement. For example, if the given model
-   is "https://ollama-ui.pagoda.liris.cnrs.fr/ollama/v1/", then the open-webui
-   server will receive an http request of the form
-       "POST /ollama/v1/chat/completions HTTP/1.1".
-   Hence calling
-     litellm.completion(model="https://ollama-ui.pagoda.liris.cnrs.fr/ollama/v1/chat")
-   will induce a "POST /ollama/v1/chat/chat/completions/ HTTP/1.1" that will
-   fail with a 405 error code.
+If you get  an error code of `405` this generally indicates that the endpoint/route is not implemented.
 
 ## Troubleshooting out of error messages
 
 ### 405: Method Not Allowed
 
-litellm.exceptions.APIError: litellm.APIError: APIError: Featherless_aiException - Error code: 405 - {'detail': 'Method Not Allowed'}
+An error code of `405` this generally indicates that the endpoint/route is not implemented and thus you should probably change the value oe [`OPENWEBUI_API_ENDPOINT`](#define-the-api-endpoint-through-openwebui_api_endpoint).
 
+Example of error: when using the [`litellm` example](./Litellm/Readme.md) and making a call of the form
+
+```python
+litellm.completion(model="https://some-server.organisation.org/ollama/v1/chat")
+```
+
+will trigger an http request of the form (because `litellm` plays some tricks/helpers under the hood)
+
+```bash
+"POST /ollama/v1/chat/chat/completions/ HTTP/1.1"
+```
+
+that will in turn trigger the following error
+
+```bash
+litellm.exceptions.APIError: [...] Error code: 405 - {'detail': 'Method Not Allowed'}
+```
+
+### Ollama_chat Exception "Not authenticated"
+
+FIXME
+FIXME
 
 Following will fail with the error message:
   litellm.exceptions.APIConnectionError: Ollama_chatException - {"detail":"Not authenticated"}
@@ -150,8 +162,9 @@ MODEL_ID = "ollama_chat/qwen2.5-coder:32b-instruct-fp16"
 
 ## Running the examples
 
-The different subdirectories hold self-contained examples. Feel free to experiment with the one at your convenience 
+The different subdirectories hold self-contained examples. Feel free to experiment with the one at your convenience
 
 - [LiteLLM](./Litellm)
 - [Smolagents](./Smolagents)
+- [Requests](./Requests/)
 - FIXME
