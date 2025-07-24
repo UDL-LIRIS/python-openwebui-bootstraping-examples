@@ -15,7 +15,7 @@ except KeyError:
     print("Exiting.")
     sys.exit(1)
 
-### Using the model through the smolagents package
+### Using the model through the openai package
 if __name__ == "__main__":
     from openai import OpenAI
     openai_client = OpenAI(base_url=OPENWEBUI_SERVER_URL+OPENWEBUI_API_ENDPOINT, 
